@@ -384,6 +384,13 @@ def check_cfg(cfg: dict, hard: bool = True) -> None:
                     )
                 cfg[k] = bool(v)
 
+    # special handling for offline_tracking
+    if (cfg.get("offline_tracking") is not None) and cfg.get("mode") != "track":
+        raise TypeError(
+            f"Offline tracking is only available in tracking mode.\n"
+            f"Got offline_tracking: '{cfg.get('offline_tracking')}' and mode: '{cfg.get('mode')}'"
+        )
+
 
 def get_save_dir(args: SimpleNamespace, name: str | None = None) -> Path:
     """Return the directory path for saving outputs, derived from arguments or default settings.
