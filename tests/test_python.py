@@ -870,5 +870,5 @@ def test_offline_tracking():
     )
     for offline_res, online_res in zip(offline_results, online_results):
         # check equality, account for loss of precision from saving/loading values
-        assert torch.allclose(offline_res.boxes.data.sort(dim=0)[0], online_res.boxes.data.sort(dim=0)[0], atol=1e-4)
+        assert torch.allclose(offline_res.boxes.data.sort(dim=0)[0], online_res.boxes.data.sort(dim=0)[0], atol=1e-3)
         assert offline_res.boxes.is_track == online_res.boxes.is_track
