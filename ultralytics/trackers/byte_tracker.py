@@ -289,16 +289,14 @@ class BYTETracker:
         removed_stracks = []
 
         scores = results.conf
-        bboxes = results.xywhr if hasattr(results, "xywhr") else results.xywh
-        # Add index
-        bboxes = np.concatenate([bboxes, np.arange(len(bboxes)).reshape(-1, 1)], axis=-1)
-        cls = results.cls
 
-        # remove zero area bboxes
+        # Filter out zero-area bboxes (indices 2,3 are width,height in xywh format)
+        bboxes = results.xywhr if hasattr(results, "xywhr") else results.xywh
         valid_inds = (bboxes[:, 2] > 0) & (bboxes[:, 3] > 0)
-        bboxes = bboxes[valid_inds]
+        results = results[valid_inds]
         scores = scores[valid_inds]
-        cls = cls[valid_inds]
+        if feats is not None and len(feats):
+            feats = feats[valid_inds]
 
         remain_inds = scores >= self.args.track_high_thresh
         inds_low = scores > self.args.track_low_thresh
