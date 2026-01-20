@@ -238,7 +238,7 @@ def test_zero_area_bbox_filtering():
     tracker = BYTETracker(args, frame_rate=30)
 
     # Create Boxes with mix of valid and zero-area bboxes
-    # Format: x1, y1, x2, y2, confidence, class
+    # Format: x1, y1, x2, y2, confidence, class (xyxy format - Boxes.xywh converts to xywh)
     boxes_data = torch.tensor([
         [75, 75, 125, 125, 0.9, 0],    # valid: 50x50
         [200, 175, 200, 225, 0.9, 0],  # zero width (x1==x2)
@@ -250,7 +250,7 @@ def test_zero_area_bbox_filtering():
     boxes = Boxes(boxes_data, orig_shape=(640, 640))
 
     # Run tracker - should not crash and should filter zero-area bboxes
-    tracked = tracker.update(boxes.cpu().numpy(), img)
+    tracked = tracker.update(boxes, img)
 
     # Verify: only valid bboxes should produce tracks (2 valid out of 4)
     assert len(tracked) <= 2, f"Expected at most 2 tracked objects, got {len(tracked)}"
