@@ -220,6 +220,42 @@ def test_track_stream(model, tmp_path):
         model.track(video_url, imgsz=160, tracker=custom_yaml)
 
 
+def test_zero_area_bbox_filtering():
+    """Test that zero-area bounding boxes are filtered and don't crash tracking."""
+    from ultralytics.engine.results import Results
+    from ultralytics.trackers.byte_tracker import BYTETracker
+    from ultralytics.utils import IterableSimpleNamespace
+
+    # Create tracker with default args
+    args = IterableSimpleNamespace(
+        track_high_thresh=0.5,
+        track_low_thresh=0.1,
+        new_track_thresh=0.6,
+        track_buffer=30,
+        match_thresh=0.8,
+    )
+    tracker = BYTETracker(args, frame_rate=30)
+
+    # Create mock results with mix of valid and zero-area bboxes
+    # Format: x_center, y_center, width, height, confidence, class
+    boxes_data = torch.tensor([
+        [100, 100, 50, 50, 0.9, 0],  # valid bbox
+        [200, 200, 0, 50, 0.9, 0],  # zero width (should be filtered)
+        [300, 300, 50, 0, 0.9, 0],  # zero height (should be filtered)
+        [400, 400, 60, 60, 0.8, 0],  # valid bbox
+    ])
+
+    # Create Results object
+    img = np.zeros((640, 640, 3), dtype=np.uint8)
+    results = Results(orig_img=img, path="test.jpg", names={0: "person"}, boxes=boxes_data)
+
+    # Run tracker - should not crash and should filter zero-area bboxes
+    tracked = tracker.update(results, img)
+
+    # Verify: only valid bboxes should be tracked (2 valid out of 4)
+    assert len(tracked) <= 2, f"Expected at most 2 tracked objects, got {len(tracked)}"
+
+
 @pytest.mark.parametrize("task,weight,data", TASK_MODEL_DATA)
 def test_val(task: str, weight: str, data: str) -> None:
     """Test the validation mode of the YOLO model."""
