@@ -233,6 +233,7 @@ def test_zero_area_bbox_filtering():
         new_track_thresh=0.6,
         track_buffer=30,
         match_thresh=0.8,
+        fuse_score=True,
     )
     tracker = BYTETracker(args, frame_rate=30)
 
