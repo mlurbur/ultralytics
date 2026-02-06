@@ -10,7 +10,7 @@
 
 ## Fork Notice
 
-This is a personal fork of [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) with additional features and improvements.
+This is a personal fork of [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) with additional features and improvements for multi-object tracking used in our research. For full documentation, see [`salmon_tracking`](https://github.com/noaa-afsc-mace/salmon_tracking). 
 
 **For the version with all custom features, use the [`all_features`](https://github.com/mlurbur/ultralytics/tree/all_features) branch:**
 
