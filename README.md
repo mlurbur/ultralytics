@@ -6,6 +6,22 @@
 
 [中文](https://docs.ultralytics.com/zh/) | [한국어](https://docs.ultralytics.com/ko/) | [日本語](https://docs.ultralytics.com/ja/) | [Русский](https://docs.ultralytics.com/ru/) | [Deutsch](https://docs.ultralytics.com/de/) | [Français](https://docs.ultralytics.com/fr/) | [Español](https://docs.ultralytics.com/es) | [Português](https://docs.ultralytics.com/pt/) | [Türkçe](https://docs.ultralytics.com/tr/) | [Tiếng Việt](https://docs.ultralytics.com/vi/) | [العربية](https://docs.ultralytics.com/ar/) <br>
 
+---
+
+## Fork Notice
+
+This is a personal fork of [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) with additional features and improvements.
+
+**For the version with all custom features, use the [`all_features`](https://github.com/mlurbur/ultralytics/tree/all_features) branch:**
+
+```bash
+git clone -b all_features https://github.com/mlurbur/ultralytics.git
+```
+
+The `main` branch tracks upstream and is kept in sync with the official ultralytics repository.
+
+---
+
 <div>
     <a href="https://github.com/ultralytics/ultralytics/actions/workflows/ci.yml"><img src="https://github.com/ultralytics/ultralytics/actions/workflows/ci.yml/badge.svg" alt="Ultralytics CI"></a>
     <a href="https://clickpy.clickhouse.com/dashboard/ultralytics"><img src="https://static.pepy.tech/badge/ultralytics" alt="Ultralytics Downloads"></a>
